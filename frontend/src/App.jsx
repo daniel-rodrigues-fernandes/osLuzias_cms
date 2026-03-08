@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import CadastroPage from './Pages/CadastroPage/CadastroPage'
 import './App.css'
 
 
@@ -10,7 +11,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/cadastro',
-    element: <h1>CadastroPage</h1>,
+    element: <CadastroPage />,
     errorElement: <h1>404</h1>
   },
   {
