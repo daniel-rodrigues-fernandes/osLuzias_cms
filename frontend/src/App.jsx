@@ -1,12 +1,13 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import CadastroPage from './Pages/CadastroPage/CadastroPage'
+import LoginPage from './Pages/LoginPage/LoginPage'
 import './App.css'
 
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <h1>LoginPage</h1>,
+    element: <LoginPage />,
     errorElement: <h1>404</h1>
   },
   {
