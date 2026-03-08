@@ -1,0 +1,9 @@
+CREATE TABLE autores (
+    idAutor INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(120) NOT NULL,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    senhaHash VARCHAR(255) NOT NULL,
+    bio TEXT,
+    foto_url VARCHAR(255),
+    criadoEm DATETIME DEFAULT CURRENT_TIMESTAMP
+);
