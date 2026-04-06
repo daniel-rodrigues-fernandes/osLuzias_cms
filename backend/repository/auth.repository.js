@@ -1,15 +1,13 @@
 const db = require('../database/connection')
 
-exports.postSignup = async (data) => {
-    try {
-        const { name, email, password, confirm_password } = data;
-        if (password !== confirm_password) {
-            throw new Error('Passwords do not match');
-        }
+exports.findByEmail = async (email) => {
+    const [rows] = await db.query('SELECT * FROM autor WHERE email = ?', [email]);
+    return rows[0]; // retorna o primeiro usuário encontrado ou undefined se não houver
+};
 
-        // Pesquisar no banco se há algum e-mail igual
-        const [result] = await db.query('INSERT INTO autor (name, email, password) VALUES (?, ?, ?)', [name, email, password]);
-        
+exports.createAutor = async ({ nome, email, senhaHash }) => {
+    try {
+        const [result] = await db.query('INSERT INTO autor (nome, email, senhaHash) VALUES (?, ?, ?)', [nome, email, senhaHash]);
         return result.insertId;
     }
     catch (error) {
