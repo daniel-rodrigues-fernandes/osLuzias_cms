@@ -23,3 +23,16 @@ exports.signupAutor = async (data) => {
     const autorId = await authRepository.createAutor({ nome: name, email, senhaHash });
     return autorId;
 };
+
+exports.loginAutor = async (data) => {
+    const { email, password } = data;
+    const user = await authRepository.findByEmail(email);
+    if (!user) {
+        throw new Error('Email ou senha incorretos');
+    }
+    const isMatch = await bcrypt.compare(password, user.senhaHash);
+    if (!isMatch) {
+        throw new Error('Email ou senha incorretos');
+    }
+    return user;
+};
