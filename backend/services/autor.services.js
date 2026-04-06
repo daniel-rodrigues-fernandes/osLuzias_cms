@@ -1,6 +1,6 @@
 const autorRepository = require('../repositories/autor.repository');
 
-exports.criar = async (autorData) => {
+exports.criarAutor = async (autorData) => {
     try {
         const result = await autorRepository.createAutor(autorData);
         return result;
