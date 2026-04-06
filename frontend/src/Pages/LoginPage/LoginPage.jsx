@@ -19,6 +19,7 @@ export default function LoginPage() {
                 headers: {
                     "Content-Type": "application/json"
                 },
+                method: "POST",
                 body: JSON.stringify({
                     email,
                     password
