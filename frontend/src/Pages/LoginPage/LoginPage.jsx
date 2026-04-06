@@ -1,5 +1,6 @@
 import estilo from "./LoginPage.module.css"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function LoginPage() {
@@ -7,12 +8,41 @@ export default function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate();
 
     async function handleLogin(e) {
         e.preventDefault();
 
-        console.log(email, password);
+        try {
+
+            const response = await fetch("http://localhost:8080/auth/login", {
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email,
+                    password
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                alert(data.message || "Erro no login");
+                return;
+            }
+
+            alert("Login realizado com sucesso!");
+            navigate("/app");
+
+            setEmail("");
+            setPassword("");
+
+        } catch (error) {
+            console.error("Error logging in:", error);
+        }
     }
+
 
     return (
         <div className={estilo['login-page']}>
