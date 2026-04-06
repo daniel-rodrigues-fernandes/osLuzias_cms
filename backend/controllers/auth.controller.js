@@ -12,3 +12,13 @@ exports.signupAutor = async (req, res) => {
         return res.status(400).json({ error: error.message });
     }
 }
+
+exports.loginAutor = async (req, res) => {
+    try {
+        const token = await authService.loginAutor(req.body);
+        return res.status(200).json({ token });
+    } catch (error) {
+        console.error('Error logging in:', error);
+        return res.status(401).json({ error: error.message });
+    }
+}
