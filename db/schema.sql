@@ -4,6 +4,6 @@ CREATE TABLE autores (
     email VARCHAR(150) NOT NULL UNIQUE,
     senhaHash VARCHAR(255) NOT NULL,
     bio TEXT,
-    foto_url VARCHAR(255),
+    -- foto_url VARCHAR(255),
     criadoEm DATETIME DEFAULT CURRENT_TIMESTAMP
 );
