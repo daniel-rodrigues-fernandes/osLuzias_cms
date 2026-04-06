@@ -6,7 +6,7 @@ import './App.css'
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/login',
     element: <LoginPage />,
     errorElement: <h1>404</h1>
   },

@@ -1,7 +1,7 @@
 CREATE TABLE `autores` (
   `idAutor` INT PRIMARY KEY AUTO_INCREMENT,
   `nome` varchar(120),
-  `email` varchar(150),
+  `email` varchar(150) UNIQUE,
   `senhaHash` varchar(255),
   `bio` text,
   -- `foto_url` varchar(255),
