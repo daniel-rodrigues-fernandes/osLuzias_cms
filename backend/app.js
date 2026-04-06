@@ -1,6 +1,8 @@
 const bodyParser = require('body-parser');
 const express = require('express');
 
+const authRoutes = require('./routes/auth.routes');
+
 const app = express();
 
 app.use(bodyParser.json())
@@ -13,6 +15,8 @@ app.use((req, res, next) => {
 
   next();
 });
+
+app.use(authRoutes);
 
 const port = process.env.PORT || 8080;
 

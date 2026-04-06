@@ -1,15 +1,17 @@
 const bcrypt = require('bcrypt');
-const authRepository = require('../repositories/auth.repository');
+const authRepository = require('../repository/auth.repository');
 
 exports.signupAutor = async (data) => {
-    const { name, email, password, confirm_password } = data;
+    const { name, email, password, confirmPassword } = data;
     // Validar senha
-    if (password !== confirm_password) {
-        throw new Error('Passwords do not match');
+    if (password !== confirmPassword) {
+        throw new Error('Passwords do not match' + password + " - " + confirmPassword);
     }
 
     // Verificar se o email já existe
+    console.log('Verificando email...')
     const existingUser = await authRepository.findByEmail(email);
+    console.log('Resultado:', existingUser)
     if (existingUser) {
         throw new Error('Email já cadastrado');
     }

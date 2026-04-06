@@ -1,6 +1,7 @@
 import estilo from './CadastroPage.module.css'
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function CadastroPage() {
 
@@ -11,6 +12,7 @@ export default function CadastroPage() {
     const [showPassword, setShowPassword] = useState(false);
     const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
     const [errorPass, setErrorPass] = useState(false);
+    const navigate = useNavigate();
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -22,18 +24,20 @@ export default function CadastroPage() {
 
         try {
 
-            const response = await fetch("http://localhost:3000/auth/register", {
-                method: "POST",
+            const response = await fetch("http://localhost:8080/auth/cadastro", {
                 headers: {
                     "Content-Type": "application/json"
                 },
+                method: "POST",
                 body: JSON.stringify({
                     name,
                     email,
-                    password
+                    password,
+                    confirmPassword
                 })
             });
 
+            console.log(name, email, password, confirmPassword);
             const data = await response.json();
 
             if (!response.ok) {
@@ -41,6 +45,7 @@ export default function CadastroPage() {
             }
 
             alert("Cadastro realizado com sucesso!");
+            navigate("/login");
 
             setName("");
             setEmail("");
@@ -49,7 +54,7 @@ export default function CadastroPage() {
 
         } catch (error) {
 
-            console.error(error);
+            // console.error(error);
             alert("Erro ao cadastrar usuário.");
 
         }
