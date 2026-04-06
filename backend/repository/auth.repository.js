@@ -6,6 +6,8 @@ exports.postSignup = async (data) => {
         if (password !== confirm_password) {
             throw new Error('Passwords do not match');
         }
+
+        // Pesquisar no banco se há algum e-mail igual
         const [result] = await db.query('INSERT INTO autor (name, email, password) VALUES (?, ?, ?)', [name, email, password]);
         
         return result.insertId;
