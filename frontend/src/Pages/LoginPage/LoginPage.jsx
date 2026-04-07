@@ -9,13 +9,30 @@ export default function LoginPage() {
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [error, setError] = useState("");
+    const [fieldErrors, setFieldErrors] = useState({});
     const navigate = useNavigate();
 
     async function handleLogin(e) {
         e.preventDefault();
         setIsSubmitting(true);
 
+        setError("");
+        setFieldErrors({});
+
         try {
+
+            const errros = {};
+            if (!email) {
+                errros.email = "Email é obrigatório";
+            }
+            if (!password) {
+                errros.password = "Senha é obrigatória";
+            }
+            if (Object.keys(errros).length > 0) {
+                setFieldErrors(errros);
+                return;
+            }
 
             const response = await fetch("http://localhost:8080/auth/login", {
                 headers: {
@@ -57,14 +74,25 @@ export default function LoginPage() {
                 <h1 className={estilo['login-title']}>Os Luzias | Login</h1>
 
                 <form className={estilo['login-form']} onSubmit={handleLogin}>
+                    {error && (
+                        <div className={estilo['error-box']}>
+                            {error}
+                        </div>
+                    )}
 
                     <input
-                        className={estilo['login-input']}
+                        className={`${estilo['login-input']} ${fieldErrors.email ? estilo['input-error'] : ""}`}
                         type="email"
                         placeholder="Email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
+
+                    {fieldErrors.email && (
+                        <span className={estilo['error-text']}>
+                            {fieldErrors.email}
+                        </span>
+                    )}
 
                     <div className={estilo['password-container']}>
 
@@ -84,6 +112,12 @@ export default function LoginPage() {
                         </span>
 
                     </div>
+                    
+                    {fieldErrors.password && (
+                        <span className={estilo['error-text']}>
+                            {fieldErrors.password}
+                        </span>
+                    )}
 
                     <button className={estilo['login-button']} disabled={isSubmitting}>
                         {isSubmitting ? (
