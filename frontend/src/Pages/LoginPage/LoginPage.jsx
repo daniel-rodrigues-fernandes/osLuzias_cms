@@ -8,10 +8,12 @@ export default function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const navigate = useNavigate();
 
     async function handleLogin(e) {
         e.preventDefault();
+        setIsSubmitting(true);
 
         try {
 
@@ -41,6 +43,8 @@ export default function LoginPage() {
 
         } catch (error) {
             console.error("Error logging in:", error);
+        } finally {
+            setIsSubmitting(false);
         }
     }
 
@@ -81,9 +85,15 @@ export default function LoginPage() {
 
                     </div>
 
-                    <button className={estilo['login-button']}>
-                        Entrar
+                    <button className={estilo['login-button']} disabled={isSubmitting}>
+                        {isSubmitting ? (
+                            <span className={estilo['spinner']}></span>
+                        ) : (
+                            "Entrar"
+                        )}
                     </button>
+
+                    {/* Lista de erros */}
 
                 </form>
 
