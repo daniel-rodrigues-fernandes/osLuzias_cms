@@ -48,7 +48,8 @@ export default function LoginPage() {
             const data = await response.json();
 
             if (!response.ok) {
-                alert(data.message || "Erro no login");
+                setError(data.message || "Email ou senhas incorretos");
+                //alert(data.message || "Erro no login");
                 return;
             }
 
@@ -112,7 +113,7 @@ export default function LoginPage() {
                         </span>
 
                     </div>
-                    
+
                     {fieldErrors.password && (
                         <span className={estilo['error-text']}>
                             {fieldErrors.password}

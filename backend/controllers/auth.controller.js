@@ -19,6 +19,6 @@ exports.loginAutor = async (req, res) => {
         return res.status(200).json({ token });
     } catch (error) {
         console.error('Error logging in:', error);
-        return res.status(401).json({ error: error.message });
+        return res.status(401).json({ message: error.message });
     }
 }
