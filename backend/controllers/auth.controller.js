@@ -9,7 +9,7 @@ exports.signupAutor = async (req, res) => {
         
     } catch (error) {
         console.error('Error creating autor:', error);
-        return res.status(400).json({ error: error.message });
+        return res.status(400).json({ message: error.message });
     }
 }
 

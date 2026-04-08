@@ -11,18 +11,43 @@ export default function CadastroPage() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [error, setError] = useState("");
+    const [fieldErrors, setFieldErrors] = useState({});
     const [errorPass, setErrorPass] = useState(false);
     const navigate = useNavigate();
 
     async function handleSubmit(e) {
         e.preventDefault();
+        setIsSubmitting(true);
+
+        setError("");
+        setFieldErrors({});
 
         if (password !== confirmPassword) {
-            alert("As senhas não coincidem.");
+            setFieldErrors({ confirmPassword: "As senhas não coincidem." });
             return;
         }
 
         try {
+
+            const erros = {};
+            if (!name) {
+                erros.name = "Nome é obrigatório";
+            }
+            if (!email) {
+                erros.email = "Email é obrigatório";
+            }
+            if (!password) {
+                erros.password = "Senha é obrigatória";
+            }
+            if (!confirmPassword) {
+                erros.confirmPassword = "Confirmação de senha é obrigatória";
+            }
+            if (Object.keys(erros).length > 0) {
+                setFieldErrors(erros);
+                return;
+            }
 
             const response = await fetch("http://localhost:8080/auth/cadastro", {
                 headers: {
@@ -41,7 +66,16 @@ export default function CadastroPage() {
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.message || "Erro no cadastro");
+                if (data.message === "E-mail já cadastrado") {
+                    setFieldErrors({ email: data.message });
+                } else if (data.message === "As senhas não coincidem") {
+                    setFieldErrors({ confirmPassword: data.message });
+                    setIsSubmitting(false);
+                    return;
+                } else {
+                    setError(data.message || "Erro no cadastro");
+                }
+                return;
             }
 
             alert("Cadastro realizado com sucesso!");
@@ -53,16 +87,23 @@ export default function CadastroPage() {
             setConfirmPassword("");
 
         } catch (error) {
+            setError(error.message || "Erro no cadastro");
 
-            // console.error(error);
-            alert("Erro ao cadastrar usuário.");
-
+        } finally {
+            setIsSubmitting(false);
         }
     }
 
     const handleConfirmPasswordChange = (e) => {
         setConfirmPassword(e.target.value);
-        setErrorPass(password !== e.target.value);
+        if (password !== e.target.value) {
+            setFieldErrors({ confirmPassword: "As senhas não coincidem." });
+        } else {
+            setFieldErrors((prev) => {
+                const { confirmPassword, ...rest } = prev;
+                return rest;
+            }); 
+        }
     }
 
 
@@ -76,6 +117,11 @@ export default function CadastroPage() {
                 </h1>
 
                 <form onSubmit={handleSubmit} className={estilo['register-form']}>
+                    {error && (
+                        <div className={estilo['error-box']}>
+                            {error}
+                        </div>
+                    )}
 
                     <input
                         type="text"
@@ -111,6 +157,12 @@ export default function CadastroPage() {
                         </span>
                     </div>
 
+                    {fieldErrors.password && (
+                        <span className={estilo['error-text']}>
+                            {fieldErrors.password}
+                        </span>
+                    )}
+
                     <div className={estilo['password-container']}>
                         <input
                             type={showPasswordConfirm ? "text" : "password"}
@@ -129,17 +181,23 @@ export default function CadastroPage() {
                         </span>
 
                     </div>
-                    <p className={estilo['error-password']}>
-                        {errorPass && "As senhas não coincidem."}
-                    </p>
-
-
+                    
+                    {fieldErrors.confirmPassword && (
+                        <span className={estilo['error-text']}>
+                            {fieldErrors.confirmPassword}
+                        </span>
+                    )}
 
                     <button
                         type="submit"
                         className={estilo['register-button']}
+                        disabled={isSubmitting}
                     >
-                        Criar conta
+                        {isSubmitting ? (
+                            <span className={estilo['spinner']}></span>
+                        ) : (
+                            "Cadastrar"
+                        )}
                     </button>
 
                 </form>

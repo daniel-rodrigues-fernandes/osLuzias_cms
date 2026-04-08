@@ -46,7 +46,9 @@
 .password-container input {
     width: 100%;
     padding: 12px;
-    padding-right: 40px; /* espaço para o ícone */
+    padding-right: 40px;
+    font-size: 14px;
+    /* espaço para o ícone */
     border: 1px solid #ddd;
     border-radius: 8px;
 }
@@ -101,4 +103,42 @@
 
 .register-button:hover {
     opacity: 0.9;
+}
+
+/*  Loading no botão  */
+.spinner {
+    width: 15px;
+    height: 15px;
+    border: 2px solid #ccc;
+    border-top: 2px solid #000;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    display: inline-block;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Erros */
+.error-box {
+    background: #ffecec;
+    color: #d8000c;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.input-error {
+    border: 1px solid #d8000c;
+}
+
+.error-text {
+    color: #d8000c;
+    font-size: 12px;
+    margin-top: 4px;
+    display: block;
 }
