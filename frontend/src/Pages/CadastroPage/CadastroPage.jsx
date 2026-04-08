@@ -26,6 +26,7 @@ export default function CadastroPage() {
 
         if (password !== confirmPassword) {
             setFieldErrors({ confirmPassword: "As senhas não coincidem." });
+            setIsSubmitting(false);
             return;
         }
 
@@ -102,7 +103,7 @@ export default function CadastroPage() {
             setFieldErrors((prev) => {
                 const { confirmPassword, ...rest } = prev;
                 return rest;
-            }); 
+            });
         }
     }
 
@@ -181,7 +182,7 @@ export default function CadastroPage() {
                         </span>
 
                     </div>
-                    
+
                     {fieldErrors.confirmPassword && (
                         <span className={estilo['error-text']}>
                             {fieldErrors.confirmPassword}
@@ -191,7 +192,14 @@ export default function CadastroPage() {
                     <button
                         type="submit"
                         className={estilo['register-button']}
-                        disabled={isSubmitting}
+                        disabled={
+                            isSubmitting ||
+                            Object.keys(fieldErrors).length > 0 ||
+                            !name ||
+                            !email ||
+                            !password ||
+                            !confirmPassword
+                        }
                     >
                         {isSubmitting ? (
                             <span className={estilo['spinner']}></span>

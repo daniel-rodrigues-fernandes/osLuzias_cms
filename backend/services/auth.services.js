@@ -5,7 +5,7 @@ exports.signupAutor = async (data) => {
     const { name, email, password, confirmPassword } = data;
     // Validar senha
     if (password !== confirmPassword) {
-        throw new Error('Passwords do not match' + password + " - " + confirmPassword);
+        throw new Error('Senhas não coincidem');
     }
 
     // Verificar se o email já existe
