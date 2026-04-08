@@ -39,8 +39,11 @@
 /* Inputs */
 
 .password-container {
-    position: relative;
     width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+
 }
 
 .password-container input {
@@ -74,6 +77,8 @@
     cursor: pointer;
     font-size: 16px;
     opacity: 0.6;
+    display: flex;
+    align-items: center;
 }
 
 .password-eye:hover {
