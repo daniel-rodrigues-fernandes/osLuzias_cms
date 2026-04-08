@@ -78,7 +78,7 @@ export default function CadastroPage() {
                 return;
             }
 
-            alert("Cadastro realizado com sucesso!");
+            alert(data.message || "Cadastro realizado com sucesso!");
             navigate("/login");
 
             setName("");
