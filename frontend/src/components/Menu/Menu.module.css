@@ -1,0 +1,123 @@
+.container-nav {
+    background-color: black;
+    height: 100vh;
+    width: 15%;
+    position: fixed;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    row-gap: 33px;
+    padding-top: 30.712px;
+    padding-left: 7.675px;
+    transition: 350ms;
+}
+
+.container-nav__close {
+    composes: container-nav;
+    width: 4%;
+    transition: 450ms;
+}
+
+.nav-nome-clinica {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: white;
+    font-size: 1rem;
+    white-space: nowrap;
+    height: 32px;
+}
+
+.nav-nome-clinica svg {
+    font-size: 1.8rem;
+    cursor: pointer;
+    margin: 0.2rem 0;
+}
+
+.nav-menu {
+    display: flex;
+    padding: 0px 5px;
+}
+
+.nav-menu svg {
+    font-size: 2rem;
+    color: white;
+    min-width: 2rem;
+}
+
+.nav-menu svg:hover {
+    transform: scale(1.2);
+}
+
+.nav-items {
+    display: flex;
+    flex-direction: column;
+    row-gap: 33px;
+    height: 100%;
+}
+
+.nav-item {
+    width: 100%;
+}
+
+.nav-item a {
+    width: 90%;
+    color: white;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.nav-item a span {
+    white-space: nowrap;
+}
+
+.nav-item a:hover, .nav-item a.ativo {
+    background-color: #333;
+}
+
+.nav-item a svg {
+    min-width: 2rem;
+    font-size: 2rem;
+    margin-right: 10%;
+}
+
+.close {
+    display: none;
+}
+
+.btn-sair {
+    margin-top: auto;
+    margin-bottom: 33.4px;
+}
+
+@media (max-width: 640px){
+    .container-nav {
+        width: 50%;
+        height: 100dvh;
+    }
+
+    .container-nav__close {
+        width: 10%;
+    }
+
+    .nav-nome-clinica {
+        margin-top: 20px;
+    }
+
+    .nav-menu {
+        margin-top: 31.2px;
+    }
+
+    .nav-item a {
+        font-size: 0.8rem;
+    }
+
+    .nav-item a svg, .nav-menu svg {
+        font-size: 1.3rem;
+    }
+}

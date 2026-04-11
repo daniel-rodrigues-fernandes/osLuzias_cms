@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import CadastroPage from './Pages/CadastroPage/CadastroPage'
 import LoginPage from './Pages/LoginPage/LoginPage'
+import RootLayout from './Pages/Root/RootLayout'
 import './App.css'
 
 
@@ -18,11 +19,11 @@ const router = createBrowserRouter([
   {
     path: '/app',
     errorElement: <h1>404</h1>,
-    element: <h1>RootLayout</h1>,
-    children: [
-      {index: true, element: <h1>HomePage</h1>},
-      {index: "/post", element: <h1>Escrever texto</h1>},
-    ]
+    element: <RootLayout />,
+    // children: [
+    //   {index: true, element: <h1>HomePage</h1>},
+    //   {index: "/post", element: <h1>Escrever texto</h1>},
+    // ]
   },
 ])
 

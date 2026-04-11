@@ -22,15 +22,15 @@ export default function LoginPage() {
 
         try {
 
-            const errros = {};
+            const erros = {};
             if (!email) {
-                errros.email = "Email é obrigatório";
+                erros.email = "Email é obrigatório";
             }
             if (!password) {
-                errros.password = "Senha é obrigatória";
+                erros.password = "Senha é obrigatória";
             }
-            if (Object.keys(errros).length > 0) {
-                setFieldErrors(errros);
+            if (Object.keys(erros).length > 0) {
+                setFieldErrors(erros);
                 return;
             }
 
@@ -52,6 +52,8 @@ export default function LoginPage() {
                 //alert(data.message || "Erro no login");
                 return;
             }
+
+            localStorage.setItem("token", data.token);
 
             alert("Login realizado com sucesso!");
             navigate("/app");

@@ -1,4 +1,6 @@
 const authService = require('../services/auth.services');
+const jwt = require('jsonwebtoken');
+const SECRET = "sua_chave_secreta_aqui"; // Substitua por uma chave secreta forte
 
 exports.signupAutor = async (req, res) => {
     try {
@@ -21,10 +23,10 @@ exports.signupAutor = async (req, res) => {
 
 exports.loginAutor = async (req, res) => {
     try {
-        const token = await authService.loginAutor(req.body);
-        return res.status(200).json({ token });
+        const user = await authService.loginAutor(req.body);
+        const token = jwt.sign({ id: user.id, email: user.email }, SECRET, { expiresIn: '1d' });
+        return res.status(200).json({ message: 'Login realizado com sucesso', token });
     } catch (error) {
-        // console.error('Error logging in:', error);
         return res.status(401).json({ message: error.message });
     }
 }

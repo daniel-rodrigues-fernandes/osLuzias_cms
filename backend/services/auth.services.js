@@ -8,8 +8,6 @@ exports.signupAutor = async (data) => {
         throw new Error('Senhas não coincidem');
     }
 
-    // Verificar se o email já existe
-    console.log('Verificando email...')
     const existingUser = await authRepository.findByEmail(email);
     console.log('Resultado:', existingUser)
     if (existingUser) {
