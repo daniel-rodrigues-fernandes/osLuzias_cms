@@ -24,24 +24,19 @@
 --   `status` ENUM('rascunho', 'publicado', 'arquivado') DEFAULT 'rascunho'
 -- );
 
-CREATE TABLE `post_metricas` (
-  `PostId` INT PRIMARY KEY AUTO_INCREMENT,
-  `visualizacoes` INT,
-  `compartilhamentos` INT,
-  `tempo_medio_leitura` INT
-);
-
--- CREATE TABLE `posts_relacionados` (
---   `idPostPrincipal` INT,
---   `idPostRelacionado` INT,
---   PRIMARY KEY (`idPostPrincipal`, `idPostRelacionado`)
+-- CREATE TABLE `post_metricas` (
+--   `postId` INT PRIMARY KEY AUTO_INCREMENT,
+--   `visualizacoes` INT DEFAULT 0,
+--   `compartilhamentos` INT DEFAULT 0,
+--   `tempo_medio_leitura` INT DEFAULT 0,
+--   FOREIGN KEY (`postId`) REFERENCES `posts` (`idPost`) ON DELETE CASCADE
 -- );
 
-CREATE TABLE `categorias` (
-  `idCategoria` INT PRIMARY KEY AUTO_INCREMENT,
-  `nome` varchar(100),
-  `slug` varchar(100)
-);
+-- CREATE TABLE `categorias` (
+--   `idCategoria` INT PRIMARY KEY AUTO_INCREMENT,
+--   `nome` varchar(100),
+--   `slug` varchar(100)
+-- );
 
 -- CREATE TABLE `posts_categorias` (
 --   `id_post` int,
@@ -56,6 +51,12 @@ CREATE TABLE `categorias` (
 --   `legenda` varchar(255),
 --   `ordem` int,
 --   `destaque` bool
+-- );
+
+-- CREATE TABLE `posts_relacionados` (
+--   `idPostPrincipal` INT,
+--   `idPostRelacionado` INT,
+--   PRIMARY KEY (`idPostPrincipal`, `idPostRelacionado`)
 -- );
 
 -- ALTER TABLE `posts` ADD FOREIGN KEY (`autorId`) REFERENCES `autores` (`idAutor`);
