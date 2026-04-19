@@ -4,6 +4,8 @@ import LoginPage from './Pages/LoginPage/LoginPage'
 import RootLayout from './Pages/Root/RootLayout'
 import './App.css'
 import HomePage from './Pages/HomePage/HomePage'
+import ProtectedRoute from './components/ProtectedRoute'
+import NewArticle from './Pages/NewArticle/NewArticle'
 
 
 const router = createBrowserRouter([
@@ -20,10 +22,13 @@ const router = createBrowserRouter([
   {
     path: '/',
     errorElement: <h1>Error - 404</h1>,
-    element: <RootLayout />,
+    element:
+      <ProtectedRoute >
+        <RootLayout />
+      </ProtectedRoute >,
     children: [
-      {index: true, element: <HomePage />},
-      {path: "novo-artigo", element: <h1>Escrever texto</h1>},
+      { index: true, element: <HomePage /> },
+      { path: "novo-artigo", element: <NewArticle /> },
     ]
   },
 ])

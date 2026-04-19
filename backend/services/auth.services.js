@@ -57,7 +57,7 @@ exports.loginAutor = async (data) => {
             email: user.email
         },
         process.env.JWT_SECRET,
-        { expiresIn: '1d' }
+        { expiresIn: '5min' }
     );
 
     return token;

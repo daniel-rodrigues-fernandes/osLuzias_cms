@@ -56,7 +56,7 @@ export default function LoginPage() {
             localStorage.setItem("token", data.token);
 
             alert("Login realizado com sucesso!");
-            navigate("/app");
+            navigate("/");
 
             setEmail("");
             setPassword("");

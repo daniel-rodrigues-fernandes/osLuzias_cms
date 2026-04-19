@@ -1,0 +1,19 @@
+.header-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.form-input {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.form-input  input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
