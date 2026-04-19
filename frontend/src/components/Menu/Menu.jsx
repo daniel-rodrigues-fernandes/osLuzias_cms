@@ -26,7 +26,7 @@ export default function Menu() {
             }
             <ul className={estilo['nav-items']}>
                 <li className={estilo['nav-item']}>
-                    <NavLink to='' end className={({isActive}) => isActive ? estilo['ativo'] : undefined }>
+                    <NavLink to='/' end className={({isActive}) => isActive ? estilo['ativo'] : undefined }>
                         <IoMdHome />
                         <span className={`${menuState ? undefined : estilo['close']}`}>Início</span>
                     </NavLink>
@@ -38,13 +38,13 @@ export default function Menu() {
                     </NavLink>
                 </li> */}
                 <li className={estilo['nav-item']}>
-                    <NavLink to='pacientes' className={({isActive}) => isActive ? estilo['ativo'] : undefined }>
+                    <NavLink to='novo-artigo' className={({isActive}) => isActive ? estilo['ativo'] : undefined }>
                         <FaPlusCircle />
                         <span className={`${menuState ? undefined : estilo['close']}`}>Novo Artigo</span>
                     </NavLink>
                 </li>
                 <li className={estilo['nav-item']}>
-                    <NavLink to='agendamentos' className={({isActive}) => isActive ? estilo['ativo'] : undefined }>
+                    <NavLink to='/artigos' className={({isActive}) => isActive ? estilo['ativo'] : undefined }>
                         <FaFileAlt />
                         <span className={`${menuState ? undefined : estilo['close']}`}>Artigos</span>
                     </NavLink>

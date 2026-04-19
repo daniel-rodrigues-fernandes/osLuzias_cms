@@ -1,7 +1,9 @@
+require('dotenv').config();
 const bodyParser = require('body-parser');
 const express = require('express');
 
 const authRoutes = require('./routes/auth.routes');
+const postRoutes = require('./routes/post.routes');
 
 const app = express();
 
@@ -17,6 +19,7 @@ app.use((req, res, next) => {
 });
 
 app.use(authRoutes);
+app.use('/posts', postRoutes);
 
 const port = process.env.PORT || 8080;
 
