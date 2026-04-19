@@ -8,6 +8,16 @@ exports.createPost = async (data, userId) => {
         throw new Error("Título e conteúdo são obrigatórios");
     }
 
+    if (tempoLeitura <= 0 ) {
+        const error = new Error("Tempo de leitura deve ser maior que zero");
+        error.statusCode = 400;
+        throw error;
+    }
+
+    if (!resumo) {
+        throw new Error("Resumo é obrigatório");
+    }
+
     const slug = slugify(titulo, { lower: true, strict: true });
 
     return await postRepository.createPost({
@@ -35,8 +45,19 @@ exports.getPostBySlug = async (slug) => {
     return post;
 };
 
-exports.updatePost = async (id, data) => {
-    await postRepository.updatePost(id, data);
+exports.updatePost = async (id, data, userId) => {
+    const post = await postRepository.findById(id);
+    if (!post) {
+        throw new Error("Post não encontrado");
+    }
+
+    if (post.autorId !== userId) {
+        const error = new Error("Apenas o autor pode atualizar este post");
+        error.statusCode = 403;
+        throw error;
+    }
+
+    return await postRepository.updatePost(id, data);
 };
 
 exports.archivePost = async (id) => {

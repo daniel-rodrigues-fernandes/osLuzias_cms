@@ -33,9 +33,18 @@ exports.getPostBySlug = async (req, res) => {
 };
 
 exports.updatePost = async (req, res) => {
-    await postService.updatePost(req.params.id, req.body);
 
-    res.json({ message: "Post atualizado" });
+    try {
+        const updated = await postService.updatePost(
+            req.params.id,
+            req.body,
+            req.user.id
+        );
+
+        res.json({ message: "Post atualizado com sucesso" });
+    } catch (error) {
+        res.status(error.status || 400 ).json({ message: error.message });
+    }
 };
 
 exports.archivePost = async (req, res) => {

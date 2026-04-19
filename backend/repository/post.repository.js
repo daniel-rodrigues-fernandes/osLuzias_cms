@@ -42,6 +42,14 @@ exports.findAll = async () => {
     return rows;
 };
 
+exports.findById = async (id) => {
+    const [rows] = await db.query(`
+        SELECT * FROM posts WHERE idPost = ?
+    `, [id]);
+
+    return rows[0];
+};
+
 exports.findBySlug = async (slug) => {
     const [rows] = await db.query(`
         SELECT p.*, a.nome AS autor
