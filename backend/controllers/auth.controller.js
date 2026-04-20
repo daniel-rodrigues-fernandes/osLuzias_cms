@@ -22,12 +22,13 @@ exports.signupAutor = async (req, res) => {
 
 exports.loginAutor = async (req, res) => {
     try {
-        const token = await authService.loginAutor(req.body);
+        const result = await authService.loginAutor(req.body);
 
         return res.status(200).json({
             success: true,
             message: 'Login realizado com sucesso',
-            token
+            token: result.token,
+            user: result.user
         });
 
     } catch (error) {

@@ -1,0 +1,21 @@
+.table-row td {
+  padding: 12px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* Status */
+/* .status {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+.status.published {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.status.draft {
+  background: #fef9c3;
+  color: #a16207;
+} */

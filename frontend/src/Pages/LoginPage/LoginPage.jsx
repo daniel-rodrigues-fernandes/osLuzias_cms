@@ -53,6 +53,7 @@ export default function LoginPage() {
                 return;
             }
 
+            localStorage.setItem("username", data.user.nome);
             localStorage.setItem("token", data.token);
 
             alert("Login realizado com sucesso!");

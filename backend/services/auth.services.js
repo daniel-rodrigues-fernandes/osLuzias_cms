@@ -60,5 +60,5 @@ exports.loginAutor = async (data) => {
         { expiresIn: '5min' }
     );
 
-    return token;
+    return { token, user: { id: user.idAutor, nome: user.nome, email: user.email } };
 };
