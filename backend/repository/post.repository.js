@@ -21,8 +21,7 @@ exports.createPost = async (post) => {
         slug,
         htmlContent,
         htmlResumo,
-        // tempoLeitura,
-        null,
+        tempoLeitura,
         autorId,
         status || 'rascunho',
         status === 'publicado' ? new Date() : null

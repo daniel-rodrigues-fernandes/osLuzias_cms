@@ -20,9 +20,9 @@ export default function HomePage() {
       </header>
 
       <section className={estilo['metrics']}>
-        <MetricCard title="Total de Posts" value="123" />
-        <MetricCard title="Total de Comentários" value="456" />
-        <MetricCard title="Total de Usuários" value="789" />
+        <MetricCard title="Artigos Publicados" value="123" />
+        <MetricCard title="Artigos em Rascunho" value="456" />
+        <MetricCard title="Tempo de Leitura Médio" value="789" />
       </section>
 
       <section className={estilo['table-container']}>

@@ -21,15 +21,6 @@ export default function NewArticle() {
     }
 
     async function handleClick(e) {
-        setIsSubmitting(prev => ({ ...prev, [e.target.name]: true }));
-        let post = {}
-
-        if (!article.titulo || !article.resumo || !article.conteudo) {
-            alert("Todos os campos são obrigatórios");
-            setIsSubmitting(prev => ({ ...prev, [e.target.name]: false }));
-            return;
-        }
-
         if (e.target.name === "discard") {
             setArticle({
                 titulo: "",
@@ -37,6 +28,16 @@ export default function NewArticle() {
                 conteudo: ""
             });
             alert("Artigo descartado");
+            setIsSubmitting(prev => ({ ...prev, [e.target.name]: false }));
+            return;
+        }
+
+        setIsSubmitting(prev => ({ ...prev, [e.target.name]: true }));
+        
+        let post = {}
+
+        if (!article.titulo || !article.resumo || !article.conteudo) {
+            alert("Todos os campos são obrigatórios");
             setIsSubmitting(prev => ({ ...prev, [e.target.name]: false }));
             return;
         }
