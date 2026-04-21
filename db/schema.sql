@@ -1,6 +1,7 @@
 -- CREATE TABLE `autores` (
 --   `idAutor` INT PRIMARY KEY AUTO_INCREMENT,
 --   `nome` varchar(120),
+--   `role` ENUM('admin', 'editor', 'autor') DEFAULT 'autor',
 --   `email` varchar(150) UNIQUE,
 --   `senhaHash` varchar(255),
 --   `bio` text,
@@ -8,6 +9,7 @@
 --   `criado_em` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 --   `atualizado_em` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 -- );
+
 
 -- CREATE TABLE `posts` (
 --   `idPost` INT PRIMARY KEY AUTO_INCREMENT,

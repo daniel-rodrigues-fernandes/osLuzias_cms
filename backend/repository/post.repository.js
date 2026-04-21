@@ -3,10 +3,10 @@ const db = require('../database/connection');
 
 exports.createPost = async (post) => {
     const {
-        titulo,
+        htmlTitle,
         slug,
-        conteudo,
-        resumo,
+        htmlContent,
+        htmlResumo,
         tempoLeitura,
         autorId,
         status
@@ -17,11 +17,12 @@ exports.createPost = async (post) => {
         (titulo, slug, conteudo, resumo, tempoLeitura, autorId, status, publicado_em)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     `, [
-        titulo,
+        htmlTitle,
         slug,
-        conteudo,
-        resumo,
-        tempoLeitura,
+        htmlContent,
+        htmlResumo,
+        // tempoLeitura,
+        null,
         autorId,
         status || 'rascunho',
         status === 'publicado' ? new Date() : null

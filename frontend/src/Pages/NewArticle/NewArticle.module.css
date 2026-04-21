@@ -1,3 +1,8 @@
+.main {
+    display: flex;
+    flex-direction: column;
+}
+
 .header {
     display: flex;
     justify-content: space-between;
@@ -17,8 +22,8 @@
     gap: 10px;
 }
 
-.header-button {
-    padding: 10px 20px;
+.header-button-save, .header-button-publicar, .header-button-descartar {
+    padding: 10px 10px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -26,6 +31,45 @@
     background-color: black;
     color: white;
     cursor: pointer;
+    width: 140px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.header-button-descartar {
+    background-color: transparent;
+    color: #ef4444;
+    border: 1px solid #ef4444;
+    transition: transform 0.3s ease;
+}
+
+.header-button-descartar:hover {
+    background-color: #ef4444;
+    color: white;
+    transform: scale(1.02);
+}
+
+.loading, .loading-discard {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid white;
+    border-top: 3px solid black;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.loading-discard {
+    border: 3px solid #ef4444;
+    border-top: 3px solid transparent;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .article-form {
@@ -36,6 +80,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    height: 100%;
 }
 
 .form-group {
@@ -66,6 +111,10 @@
 .form-group select:focus {
   outline: none;
   border-color: #ef4444;
+}
+
+.form-group:last-child {
+    height: 100%;
 }
 
 .form-group textarea {

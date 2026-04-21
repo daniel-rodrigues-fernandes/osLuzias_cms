@@ -1,30 +1,36 @@
 const postRepository = require('../repository/post.repository');
+const { parseMarkdown } = require('../utils/converteMarkdownParaHtml');
 const slugify = require('slugify');
 
 exports.createPost = async (data, userId) => {
     const { titulo, conteudo, resumo, tempoLeitura, status } = data;
-
+    
     if (!titulo || !conteudo) {
         throw new Error("Título e conteúdo são obrigatórios");
-    }
-
-    if (tempoLeitura <= 0 ) {
-        const error = new Error("Tempo de leitura deve ser maior que zero");
-        error.statusCode = 400;
-        throw error;
     }
 
     if (!resumo) {
         throw new Error("Resumo é obrigatório");
     }
 
+    const htmlTitle = parseMarkdown(titulo);
+    const htmlContent = parseMarkdown(conteudo);
+    const htmlResumo = parseMarkdown(resumo);
+
+    // if (tempoLeitura <= 0 ) {
+    //     const error = new Error("Tempo de leitura deve ser maior que zero");
+    //     error.statusCode = 400;
+    //     throw error;
+    // }
+
+
     const slug = slugify(titulo, { lower: true, strict: true });
 
     return await postRepository.createPost({
-        titulo,
+        htmlTitle,
         slug,
-        conteudo,
-        resumo,
+        htmlContent,
+        htmlResumo,
         tempoLeitura,
         autorId: userId,
         status
