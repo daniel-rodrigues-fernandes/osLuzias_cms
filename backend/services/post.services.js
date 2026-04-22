@@ -34,8 +34,16 @@ exports.createPost = async (data, userId) => {
     });
 };
 
-exports.getAllPosts = async () => {
-    return await postRepository.findAll();
+exports.getAllPostsPublished = async () => {
+    return await postRepository.findPublished();
+};
+
+exports.getPostsDoAutor = async (autorId) => {
+    if (!autorId) {
+        throw new Error("Autor não autenticado");
+    }
+
+    return await postRepository.findByAutor(autorId);
 };
 
 exports.getPostBySlug = async (slug) => {

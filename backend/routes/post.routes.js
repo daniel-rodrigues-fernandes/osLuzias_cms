@@ -5,8 +5,11 @@ const postController = require('../controllers/post.controller');
 const authMiddleware = require('../middlewares/authMiddleware');
 
 // públicas
-router.get('/', postController.getAllPosts);
+router.get('/', postController.getAllPostsPublished);
 router.get('/:slug', postController.getPostBySlug);
+
+// protegidas
+router.get('/me/posts', authMiddleware, postController.getMyPosts);
 
 // protegidas
 router.post('/', authMiddleware, postController.createPost);

@@ -30,7 +30,7 @@ exports.createPost = async (post) => {
     return result.insertId;
 };
 
-exports.findAll = async () => {
+exports.findPublished = async () => {
     const [rows] = await db.query(`
         SELECT p.*, a.nome AS autor
         FROM posts p
@@ -38,6 +38,18 @@ exports.findAll = async () => {
         WHERE status = 'publicado'
         ORDER BY publicado_em DESC
     `);
+
+    return rows;
+};
+
+exports.findByAutor = async (autorId) => {
+    const [rows] = await db.query(`
+        SELECT p.*, a.nome AS autor
+        FROM posts p
+        LEFT JOIN autores a ON a.idAutor = p.autorId
+        WHERE p.autorId = ?
+        ORDER BY p.criado_em DESC
+    `, [autorId]);
 
     return rows;
 };

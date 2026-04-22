@@ -6,6 +6,9 @@ import './App.css'
 import HomePage from './Pages/HomePage/HomePage'
 import ProtectedRoute from './components/ProtectedRoute'
 import NewArticle from './Pages/NewArticle/NewArticle'
+import Articles from './Pages/Articles/Articles'
+import { artigosLoader } from './loader/artigos.loader'
+import ErrorPage from './Pages/ErrorPage/ErrorPage'
 
 
 const router = createBrowserRouter([
@@ -29,6 +32,8 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       { path: "novo-artigo", element: <NewArticle /> },
+      { path: "artigos", element: <Articles />, loader: artigosLoader },
+      { path: "artigos/:id/editar", element: <NewArticle />, loader: editArticleLoader },
     ]
   },
 ])

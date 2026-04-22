@@ -1,19 +1,34 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, useLoaderData, useParams } from 'react-router-dom';
 import estilo from './NewArticle.module.css'
 
 export default function NewArticle() {
     const navigate = useNavigate();
+    const { id } = useParams();
+    const articleData = useLoaderData();
+    const isEditMode = Boolean(id);
     const [isSubmitting, setIsSubmitting] = useState({
         save: false,
         publish: false,
         discard: false
     });
+
     const [article, setArticle] = useState({
         titulo: "",
         resumo: "",
         conteudo: ""
     });
+
+    useEffect(() => {
+        if (isEditMode && articleData) {
+            setArticle({
+                titulo: articleData.titulo,
+                resumo: articleData.resumo,
+                conteudo: articleData.conteudo
+            });
+        }
+    }, [isEditMode, articleData]);
+
 
     function handleChange(e) {
         const { name, value } = e.target;
@@ -54,14 +69,22 @@ export default function NewArticle() {
             }
         }
 
+        let url = "http://localhost:8080/posts";
+        let method = "POST";
+
+        if (isEditMode) {
+            url = `http://localhost:8080/posts/${id}`;
+            method = "PUT";
+        }
+
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch("http://localhost:8080/posts", {
+            const response = await fetch(url, {
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`
                 },
-                method: "POST",
+                method: method,
                 body: JSON.stringify(post)
             });
 
@@ -93,7 +116,7 @@ export default function NewArticle() {
     return (
         <main className={estilo['main']}>
             <header className={estilo['header']}>
-                <h1 className={estilo['header-title']}>Novo artigo</h1>
+                <h1 className={estilo['header-title']}>{isEditMode ? "Editar artigo" : "Novo artigo"}</h1>
                 <div className={estilo['header-buttons']}>
                     <button
                         name='save'

@@ -18,9 +18,21 @@ exports.createPost = async (req, res) => {
     }
 };
 
-exports.getAllPosts = async (req, res) => {
-    const posts = await postService.getAllPosts();
+exports.getAllPostsPublished = async (req, res) => {
+    const posts = await postService.getAllPostsPublished();
     res.json(posts);
+};
+
+exports.getMyPosts = async (req, res) => {
+    try {
+        const autorId = req.user.id; // vindo do middleware JWT
+
+        const posts = await postService.getPostsDoAutor(autorId);
+
+        res.json(posts);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 };
 
 exports.getPostBySlug = async (req, res) => {
