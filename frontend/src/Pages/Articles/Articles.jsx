@@ -27,7 +27,8 @@ export default function Articles() {
           </div>
         ) : (artigos.length > 0 ? artigos.map(artigo => (
             <ArticleCard
-              key={artigo.id}
+              key={artigo.idPost}
+              id={artigo.idPost}
               categoria={artigo.categoria}
               status={artigo.status}
               titulo={artigo.titulo}

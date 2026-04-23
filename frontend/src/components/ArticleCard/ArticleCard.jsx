@@ -1,8 +1,13 @@
+import { useNavigate } from 'react-router-dom';
 import estilo from './ArticleCard.module.css';
 
-export default function ArticleCard({categoria, status, titulo, resumo, data, leitura, views, shares}) {
+export default function ArticleCard({ categoria, status, titulo, resumo, data, leitura, views, shares, id }) {
 
     const statusClass = status === 'Publicado' ? estilo['status-published'] : estilo['status-draft'];
+    const navigate = useNavigate();
+    function handleClick() {
+        navigate(`/artigos/${id}/editar`);
+    }   
 
     return (
         <div className={estilo['article-card']}>
@@ -18,7 +23,7 @@ export default function ArticleCard({categoria, status, titulo, resumo, data, le
                     <span>{views} views</span>
                     <span>{shares} shares</span>
                     <div className={estilo['article-actions']}>
-                        <button className={estilo['article-button-edit']}>Editar</button>
+                        <button className={estilo['article-button-edit']} onClick={handleClick}>Editar</button>
                         <button className={estilo['article-button-delete']}>Excluir</button>
                     </div>
                 </div>

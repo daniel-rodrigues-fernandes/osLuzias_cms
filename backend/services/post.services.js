@@ -14,20 +14,18 @@ exports.createPost = async (data, userId) => {
         throw new Error("Resumo é obrigatório");
     }
 
-    const htmlTitle = parseMarkdown(titulo);
     const htmlContent = parseMarkdown(conteudo);
-    const htmlResumo = parseMarkdown(resumo);
-
     const tempoLeitura = calcularTempoLeitura(htmlContent);
 
 
     const slug = slugify(titulo, { lower: true, strict: true });
 
     return await postRepository.createPost({
-        htmlTitle,
+        titulo,
         slug,
+        conteudo,
         htmlContent,
-        htmlResumo,
+        resumo,
         tempoLeitura,
         autorId: userId,
         status
@@ -55,6 +53,15 @@ exports.getPostBySlug = async (slug) => {
 
     return post;
 };
+
+exports.getById = async (id) => {
+    const post = await postRepository.findById(id);
+    if (!post) {
+        throw new Error("Post não encontrado");
+    }
+    return post;
+};
+
 
 exports.updatePost = async (id, data, userId) => {
     const post = await postRepository.findById(id);

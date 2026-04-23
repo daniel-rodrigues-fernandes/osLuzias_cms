@@ -44,6 +44,17 @@ exports.getPostBySlug = async (req, res) => {
     }
 };
 
+exports.getById = async (req, res) => {
+    try {
+       
+        const post = await postService.getById(req.params.id);
+        res.json(post);
+    } catch (error) {
+        res.status(404).json({ message: error.message }); // Inclui o ID no log de erro para diagnóstico
+    }
+};
+
+
 exports.updatePost = async (req, res) => {
 
     try {

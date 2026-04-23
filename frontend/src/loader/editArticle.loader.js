@@ -2,7 +2,7 @@ export async function editArticleLoader({ params }) {
   const token = localStorage.getItem("token");
 
   const response = await fetch(
-    `http://localhost:8080/posts/${params.id}`,
+    `http://localhost:8080/posts/me/${params.id}`,
     {
       headers: {
         Authorization: `Bearer ${token}`

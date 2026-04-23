@@ -24,7 +24,7 @@ export default function NewArticle() {
             setArticle({
                 titulo: articleData.titulo,
                 resumo: articleData.resumo,
-                conteudo: articleData.conteudo
+                conteudo: articleData.conteudo_md
             });
         }
     }, [isEditMode, articleData]);

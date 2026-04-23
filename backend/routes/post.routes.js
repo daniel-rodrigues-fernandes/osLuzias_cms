@@ -10,6 +10,7 @@ router.get('/:slug', postController.getPostBySlug);
 
 // protegidas
 router.get('/me/posts', authMiddleware, postController.getMyPosts);
+router.get('/me/:id', authMiddleware, postController.getById); // nova rota para buscar por ID
 
 // protegidas
 router.post('/', authMiddleware, postController.createPost);

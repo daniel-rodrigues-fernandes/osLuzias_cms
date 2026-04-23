@@ -17,6 +17,8 @@ export async function artigosLoader() {
         }
         
         const artigos = await response.json();
+
+        console.log("Resposta do servidor:", artigos);
         
         if (!response.ok) {
             throw new Error(artigos.message || "Erro ao carregar artigos");

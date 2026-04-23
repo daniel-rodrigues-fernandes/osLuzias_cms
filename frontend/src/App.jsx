@@ -8,6 +8,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import NewArticle from './Pages/NewArticle/NewArticle'
 import Articles from './Pages/Articles/Articles'
 import { artigosLoader } from './loader/artigos.loader'
+import { editArticleLoader } from './loader/editArticle.loader'
 import ErrorPage from './Pages/ErrorPage/ErrorPage'
 
 

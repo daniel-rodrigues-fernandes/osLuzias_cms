@@ -3,10 +3,11 @@ const db = require('../database/connection');
 
 exports.createPost = async (post) => {
     const {
-        htmlTitle,
+        titulo,
         slug,
+        conteudo,
         htmlContent,
-        htmlResumo,
+        resumo,
         tempoLeitura,
         autorId,
         status
@@ -14,13 +15,14 @@ exports.createPost = async (post) => {
 
     const [result] = await db.query(`
         INSERT INTO posts 
-        (titulo, slug, conteudo, resumo, tempoLeitura, autorId, status, publicado_em)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        (titulo, slug, conteudo_md, conteudo_html, resumo, tempoLeitura, autorId, status, publicado_em)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     `, [
-        htmlTitle,
+        titulo,
         slug,
+        conteudo,
         htmlContent,
-        htmlResumo,
+        resumo,
         tempoLeitura,
         autorId,
         status || 'rascunho',
