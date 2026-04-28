@@ -13,18 +13,21 @@
 
 -- CREATE TABLE `posts` (
 --   `idPost` INT PRIMARY KEY AUTO_INCREMENT,
+--   `categoriaId` INT,
 --   `titulo` varchar(255),
 --   `slug` varchar(255),
 --   `conteudo_md` longtext,
 --   `conteudo_html` longtext,
 --   `resumo` text,
 --   `tempoLeitura` int,
---   `autorId` int,
+--   `autorId` INT,
 --   `publicado_em` TIMESTAMP,
 --   `criado_em` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 --   `atualizado_em` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 --   `arquivado_em` TIMESTAMP,
 --   `status` ENUM('rascunho', 'publicado', 'arquivado') DEFAULT 'rascunho'
+--   FOREIGN KEY (`autorId`) REFERENCES `autores` (`idAutor`) ON DELETE SET NULL,
+--   FOREIGN KEY (`categoriaId`) REFERENCES `categorias` (`idCategoria`) ON DELETE SET NULL
 -- );
 
 -- CREATE TABLE `post_metricas` (
@@ -37,15 +40,12 @@
 
 -- CREATE TABLE `categorias` (
 --   `idCategoria` INT PRIMARY KEY AUTO_INCREMENT,
---   `nome` varchar(100),
---   `slug` varchar(100)
+--   `nome` VARCHAR(100) NOT NULL,
+--   `slug` VARCHAR(120) UNIQUE,
+--   `descricao` TEXT,
+--   `criado_em` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 -- );
 
--- CREATE TABLE `posts_categorias` (
---   `id_post` int,
---   `id_categoria` int,
---   PRIMARY KEY (`id_post`, `id_categoria`)
--- );
 
 -- CREATE TABLE `imagens` (
 --   `idImagem` int PRIMARY KEY,

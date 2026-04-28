@@ -16,7 +16,8 @@ export default function NewArticle() {
     const [article, setArticle] = useState({
         titulo: "",
         resumo: "",
-        conteudo: ""
+        conteudo: "",
+        categoria: ""
     });
 
     useEffect(() => {
@@ -24,7 +25,8 @@ export default function NewArticle() {
             setArticle({
                 titulo: articleData.titulo,
                 resumo: articleData.resumo,
-                conteudo: articleData.conteudo_md
+                conteudo: articleData.conteudo_md,
+                categoria: articleData.categoria
             });
         }
     }, [isEditMode, articleData]);
@@ -40,7 +42,8 @@ export default function NewArticle() {
             setArticle({
                 titulo: "",
                 resumo: "",
-                conteudo: ""
+                conteudo: "",
+                categoria: ""
             });
             alert("Artigo descartado");
             setIsSubmitting(prev => ({ ...prev, [e.target.name]: false }));
@@ -51,7 +54,7 @@ export default function NewArticle() {
         
         let post = {}
 
-        if (!article.titulo || !article.resumo || !article.conteudo) {
+        if (!article.titulo || !article.resumo || !article.conteudo || !article.categoria) {
             alert("Todos os campos são obrigatórios");
             setIsSubmitting(prev => ({ ...prev, [e.target.name]: false }));
             return;
@@ -95,7 +98,8 @@ export default function NewArticle() {
                 setArticle({
                     titulo: "",
                     resumo: "",
-                    conteudo: ""
+                    conteudo: "",
+                    categoria: ""
                 });
             }
 
@@ -145,6 +149,19 @@ export default function NewArticle() {
                 </div>
             </header>
             <div className={estilo['article-form']}>
+                <div className={estilo['form-group']}>
+                    <label htmlFor="categoria">Categoria:</label>
+                    <select
+                        id="categoria"
+                        name="categoria"
+                        value={article.categoria || ""}
+                        onChange={handleChange}>
+                        <option value="">Selecione uma categoria</option>
+                        <option value="Tecnologia">Tecnologia</option>
+                        <option value="Negócios">Negócios</option>
+                        <option value="Saúde">Saúde</option>
+                    </select>
+                </div>
                 <div className={estilo['form-group']}>
                     <label htmlFor="titulo">Título:</label>
                     <input
