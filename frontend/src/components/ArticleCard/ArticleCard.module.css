@@ -35,6 +35,11 @@
     font-weight: 600;
 }
 
+.status-archived {
+    color: #6b7280;
+    font-weight: 600;
+}
+
 .article-title {
     font-size: 20px;
     font-weight: 600;

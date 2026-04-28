@@ -1,5 +1,5 @@
 import estilo from './Articles.module.css';
-import { useLoaderData, useNavigate, useNavigation } from 'react-router-dom';
+import { useLoaderData, useNavigate, useNavigation, useRevalidator } from 'react-router-dom';
 import ArticleCard from '../../components/ArticleCard/ArticleCard';
 
 export default function Articles() {
@@ -9,6 +9,7 @@ export default function Articles() {
 
   const navigation = useNavigation()
   const navigate = useNavigate()
+  const revalidator = useRevalidator()
   const isLoading = navigation.state === 'loading'
 
   return (
@@ -37,6 +38,7 @@ export default function Articles() {
               leitura={artigo.leitura}
               views={artigo.views}
               shares={artigo.shares}
+              onDeleteSuccess={revalidator.revalidate}
             />
         )) : aviso)}
           </div>
