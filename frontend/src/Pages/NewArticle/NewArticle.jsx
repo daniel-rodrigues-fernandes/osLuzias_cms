@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useLoaderData, useParams } from 'react-router-dom';
+import { FaPlusCircle } from "react-icons/fa";
 import estilo from './NewArticle.module.css'
 
 export default function NewArticle() {
@@ -12,13 +13,18 @@ export default function NewArticle() {
         publish: false,
         discard: false
     });
-
     const [article, setArticle] = useState({
         titulo: "",
         resumo: "",
         conteudo: "",
         categoria: ""
     });
+    const [showAddCategoryForm, setShowAddCategoryForm] = useState(false);
+    const [newCategory, setNewCategory] = useState("");
+
+    function handleChangeAddCategory(e) {
+        setNewCategory(e.target.value);
+    }
 
     useEffect(() => {
         if (isEditMode && articleData) {
@@ -30,6 +36,36 @@ export default function NewArticle() {
             });
         }
     }, [isEditMode, articleData]);
+
+    function handleClickShowAddCategoryForm(e) {
+        setShowAddCategoryForm(prev => !prev)
+        e.target.name === 'cancelar' ? setNewCategory("") : null; 
+    }
+
+    async function handleClickAddCategory() {
+        try {
+            const token = localStorage.getItem("token");
+            const response = await fetch("http://localhost:8080/categories", {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                method: "POST",
+                body: JSON.stringify({ nome: newCategory })
+            });
+            const data = await response.json();
+            if (response.ok) {
+                alert(data.message);
+                setArticle(prev => ({ ...prev, categoria: newCategory }));
+            } else if (response.status === 401) {
+                alert(data.message || "Sessão expirada. Faça login novamente.");
+                localStorage.removeItem("token");
+                navigate("/login");
+            }
+        } catch (error) {
+            console.log("Error adding category:", error);
+        }
+    }
 
 
     function handleChange(e) {
@@ -51,7 +87,7 @@ export default function NewArticle() {
         }
 
         setIsSubmitting(prev => ({ ...prev, [e.target.name]: true }));
-        
+
         let post = {}
 
         if (!article.titulo || !article.resumo || !article.conteudo || !article.categoria) {
@@ -149,18 +185,40 @@ export default function NewArticle() {
                 </div>
             </header>
             <div className={estilo['article-form']}>
-                <div className={estilo['form-group']}>
-                    <label htmlFor="categoria">Categoria:</label>
-                    <select
-                        id="categoria"
-                        name="categoria"
-                        value={article.categoria || ""}
-                        onChange={handleChange}>
-                        <option value="">Selecione uma categoria</option>
-                        <option value="Tecnologia">Tecnologia</option>
-                        <option value="Negócios">Negócios</option>
-                        <option value="Saúde">Saúde</option>
-                    </select>
+                <div className={estilo['category-group']}>
+                    <div className={estilo['form-group']}>
+                        <label htmlFor="categoria">Categoria:</label>
+                        <select
+                            id="categoria"
+                            name="categoria"
+                            value={article.categoria || ""}
+                            onChange={handleChange}>
+                            <option value="">Selecione uma categoria</option>
+                            <option value="Tecnologia">Tecnologia</option>
+                            <option value="Negócios">Negócios</option>
+                            <option value="Saúde">Saúde</option>
+                        </select>
+                    </div>
+                    {!showAddCategoryForm ? (
+                        <FaPlusCircle
+                            className={estilo['add-category-icon']}
+                            title="Adicionar nova categoria"
+                            onClick={handleClickShowAddCategoryForm}
+                        />
+                    ) : (
+                        <div className={estilo['add-category-form']}>
+                            <input
+                                type="text"
+                                placeholder="Informe a nova categoria"
+                                value={newCategory}
+                                onChange={handleChangeAddCategory}
+                            />
+                            <div className={estilo['add-category-form__buttons']}>
+                                <button onClick={handleClickAddCategory} disabled={!newCategory.trim()}>Adicionar</button>
+                                <button onClick={handleClickShowAddCategoryForm} name='cancelar'>Cancelar</button>
+                            </div>
+                        </div>
+                    )}
                 </div>
                 <div className={estilo['form-group']}>
                     <label htmlFor="titulo">Título:</label>

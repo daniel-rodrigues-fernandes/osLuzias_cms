@@ -125,3 +125,74 @@
 .form-group textarea {
     height: 100%;
 }
+
+.category-group {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.category-group .form-group select {
+    width: 100%;
+}
+
+.category-group .form-group {
+    width: 30%;
+}
+
+.add-category-icon {
+    font-size: 24px;
+    color: black;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.add-category-icon:hover {
+    transform: scale(1.2);
+}
+
+.add-category-form {
+    width: 40%;
+    display: flex;
+    gap: 10px;
+}
+
+.add-category-form input {
+    height: 44px;
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.add-category-form input:focus {
+    outline: none;
+    border-color: #ef4444;
+}
+
+.add-category-form button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    background-color: black;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.add-category-form__buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.add-category-form button:hover {
+    background-color: #333;
+}
+
+.add-category-form button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

@@ -4,6 +4,7 @@ const express = require('express');
 
 const authRoutes = require('./routes/auth.routes');
 const postRoutes = require('./routes/post.routes');
+const categoryRoutes = require('./routes/category.routes');
 const postMetricasRoutes = require('./routes/postMetricas.routes');
 
 const app = express();
@@ -21,6 +22,7 @@ app.use((req, res, next) => {
 
 app.use(authRoutes);
 app.use('/posts', postRoutes);
+app.use('/categories', categoryRoutes);
 app.use('/metricas', postMetricasRoutes);
 
 const port = process.env.PORT || 8080;
