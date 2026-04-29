@@ -1,9 +1,9 @@
-const categoryService = require('../services/category.service');
+const categoryService = require('../services/category.services');
 
 exports.createCategory = async (req, res) => {
     try {
         const categoryId = await categoryService.createCategory(req.body);
-        return res.status(201).json({ id: categoryId });
+        return res.status(201).json({ id: categoryId, message: "Categoria criada com sucesso" });
     } catch (error) {
         return res.status(400).json({ error: error.message });
     }

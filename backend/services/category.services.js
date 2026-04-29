@@ -1,4 +1,4 @@
-const categoryRepository = require('../repositories/category.repository');
+const categoryRepository = require('../repository/category.repository');
 const slugify = require('slugify');
 
 exports.createCategory = async (data) => {

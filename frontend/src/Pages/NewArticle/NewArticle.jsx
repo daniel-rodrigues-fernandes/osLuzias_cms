@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useLoaderData, useParams } from 'react-router-dom';
+import { useNavigate, useLoaderData, useParams, useRevalidator } from 'react-router-dom';
 import { FaPlusCircle } from "react-icons/fa";
 import estilo from './NewArticle.module.css'
 
 export default function NewArticle() {
     const navigate = useNavigate();
     const { id } = useParams();
-    const articleData = useLoaderData();
+    const {categorias, artigo} = useLoaderData();
+    const { revalidate } = useRevalidator();
     const isEditMode = Boolean(id);
     const [isSubmitting, setIsSubmitting] = useState({
         save: false,
@@ -27,15 +28,22 @@ export default function NewArticle() {
     }
 
     useEffect(() => {
-        if (isEditMode && articleData) {
+        if (isEditMode && artigo) {
             setArticle({
-                titulo: articleData.titulo,
-                resumo: articleData.resumo,
-                conteudo: articleData.conteudo_md,
-                categoria: articleData.categoria
+                titulo: artigo.titulo || "",
+                resumo: artigo.resumo || "",
+                conteudo: artigo.conteudo_md || "",
+                categoria: artigo.categoria || ""
+            });
+        } else {
+            setArticle({
+                titulo: "",
+                resumo: "",
+                conteudo: "",
+                categoria: ""
             });
         }
-    }, [isEditMode, articleData]);
+    }, [isEditMode, artigo]);
 
     function handleClickShowAddCategoryForm(e) {
         setShowAddCategoryForm(prev => !prev)
@@ -45,7 +53,7 @@ export default function NewArticle() {
     async function handleClickAddCategory() {
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch("http://localhost:8080/categories", {
+            const response = await fetch("http://localhost:8080/categorias", {
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`
@@ -55,8 +63,12 @@ export default function NewArticle() {
             });
             const data = await response.json();
             if (response.ok) {
+                console.log("Category added successfully:", data, "data.message:", data.message);
                 alert(data.message);
                 setArticle(prev => ({ ...prev, categoria: newCategory }));
+                setNewCategory("");
+                setShowAddCategoryForm(false);
+                revalidate();
             } else if (response.status === 401) {
                 alert(data.message || "Sessão expirada. Faça login novamente.");
                 localStorage.removeItem("token");
@@ -194,9 +206,9 @@ export default function NewArticle() {
                             value={article.categoria || ""}
                             onChange={handleChange}>
                             <option value="">Selecione uma categoria</option>
-                            <option value="Tecnologia">Tecnologia</option>
-                            <option value="Negócios">Negócios</option>
-                            <option value="Saúde">Saúde</option>
+                            {categorias && categorias.map((cat) => (
+                                <option key={cat.id} value={cat.nome}>{cat.nome}</option>
+                            ))}
                         </select>
                     </div>
                     {!showAddCategoryForm ? (

@@ -22,7 +22,7 @@ app.use((req, res, next) => {
 
 app.use(authRoutes);
 app.use('/posts', postRoutes);
-app.use('/categories', categoryRoutes);
+app.use('/categorias', categoryRoutes);
 app.use('/metricas', postMetricasRoutes);
 
 const port = process.env.PORT || 8080;
