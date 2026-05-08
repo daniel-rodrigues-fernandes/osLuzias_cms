@@ -77,6 +77,27 @@ exports.findBySlug = async (slug) => {
 };
 
 exports.updatePost = async (id, data) => {
+    data.conteudo_md = data.conteudo;
+    delete data.conteudo;
+
+    // Remove categoria do update direto
+    const nomeCategoria = data.categoria;
+    delete data.categoria;
+
+    // Busca o ID da categoria
+    const [categoriaRows] = await db.query(`
+        SELECT idCategoria
+        FROM categorias
+        WHERE nome = ?
+    `, [nomeCategoria]);
+
+    if (categoriaRows.length === 0) {
+        throw new Error('Categoria não encontrada');
+    }
+
+    // Adiciona o FK no objeto
+    data.categoriaId = categoriaRows[0].idCategoria;
+
     const fields = [];
     const values = [];
 
@@ -85,7 +106,11 @@ exports.updatePost = async (id, data) => {
         values.push(data[key]);
     }
 
+    console.log("Updating post with data:", data);
+    console.log("Generated SQL fields:", fields.join(', '));
+    
     values.push(id);
+    console.log("Generated SQL values:", values);
 
     await db.query(`
         UPDATE posts SET ${fields.join(', ')}

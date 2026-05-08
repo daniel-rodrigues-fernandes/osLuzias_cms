@@ -6,7 +6,7 @@ import estilo from './NewArticle.module.css'
 export default function NewArticle() {
     const navigate = useNavigate();
     const { id } = useParams();
-    const {categorias, artigo} = useLoaderData();
+    const { categorias, artigo } = useLoaderData();
     const { revalidate } = useRevalidator();
     const isEditMode = Boolean(id);
     const [isSubmitting, setIsSubmitting] = useState({
@@ -47,7 +47,7 @@ export default function NewArticle() {
 
     function handleClickShowAddCategoryForm(e) {
         setShowAddCategoryForm(prev => !prev)
-        e.target.name === 'cancelar' ? setNewCategory("") : null; 
+        e.target.name === 'cancelar' ? setNewCategory("") : null;
     }
 
     async function handleClickAddCategory() {
@@ -86,6 +86,7 @@ export default function NewArticle() {
     }
 
     async function handleClick(e) {
+        console.log("Button clicked:", article);
         if (e.target.name === "discard") {
             setArticle({
                 titulo: "",
@@ -162,6 +163,9 @@ export default function NewArticle() {
             console.log("Error saving post:", error);
         } finally {
             setIsSubmitting(prev => ({ ...prev, [e.target.name]: false }));
+            if (isEditMode) {
+                navigate("/artigos");
+            }
         }
     }
 
@@ -207,7 +211,7 @@ export default function NewArticle() {
                             onChange={handleChange}>
                             <option value="">Selecione uma categoria</option>
                             {categorias && categorias.map((cat) => (
-                                <option key={cat.id} value={cat.nome}>{cat.nome}</option>
+                                <option key={cat.idCategoria} value={cat.nome}>{cat.nome}</option>
                             ))}
                         </select>
                     </div>

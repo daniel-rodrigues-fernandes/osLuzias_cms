@@ -5,7 +5,7 @@ const slugify = require('slugify');
 
 exports.createPost = async (data, userId) => {
     const { titulo, conteudo, resumo, status } = data;
-    
+
     if (!titulo || !conteudo) {
         throw new Error("Título e conteúdo são obrigatórios");
     }
@@ -30,6 +30,36 @@ exports.createPost = async (data, userId) => {
         autorId: userId,
         status
     });
+};
+
+exports.updatePost = async (id, data, userId) => {
+    const post = await postRepository.findById(id);
+    if (!post) {
+        throw new Error("Post não encontrado");
+    }
+
+    if (post.autorId !== userId) {
+        const error = new Error("Apenas o autor pode atualizar este post");
+        error.statusCode = 403;
+        throw error;
+    }
+
+    console.log("Updating post ID:", id, "with data:", data);
+    const { titulo, conteudo, resumo, categoria, status } = data;
+    
+    if (!titulo || !conteudo) {
+        throw new Error("Título e conteúdo são obrigatórios");
+    }
+    if (!resumo) {
+        throw new Error("Resumo é obrigatório");
+    }
+
+    const slug = slugify(titulo, { lower: true, strict: true });
+
+    const conteudo_html = parseMarkdown(conteudo);
+    const tempoLeitura = calcularTempoLeitura(conteudo_html);
+
+    return await postRepository.updatePost(id, {titulo, slug, conteudo, categoria, conteudo_html, resumo, tempoLeitura, status});
 };
 
 exports.getAllPostsPublished = async () => {
@@ -60,22 +90,6 @@ exports.getById = async (id) => {
         throw new Error("Post não encontrado");
     }
     return post;
-};
-
-
-exports.updatePost = async (id, data, userId) => {
-    const post = await postRepository.findById(id);
-    if (!post) {
-        throw new Error("Post não encontrado");
-    }
-
-    if (post.autorId !== userId) {
-        const error = new Error("Apenas o autor pode atualizar este post");
-        error.statusCode = 403;
-        throw error;
-    }
-
-    return await postRepository.updatePost(id, data);
 };
 
 exports.archivePost = async (id) => {
