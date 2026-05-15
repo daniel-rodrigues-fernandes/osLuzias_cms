@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import estilo from './ArticleCard.module.css';
 
-export default function ArticleCard({ categoria, status, titulo, resumo, data, leitura, views, shares, id, onDeleteSuccess }) {
+export default function ArticleCard({ categoria, status, titulo, resumo, publicado, criado, atualizado, leitura, views, shares, id, onDeleteSuccess }) {
 
     const statusClass = status === 'publicado' ? estilo['status-published'] : status === 'rascunho' ? estilo['status-draft'] : estilo['status-archived'];
     const navigate = useNavigate();
@@ -72,7 +72,10 @@ export default function ArticleCard({ categoria, status, titulo, resumo, data, l
                 </div>
                 <h2 className={estilo['article-title']}>{titulo}</h2>
                 <p className={estilo['article-summary']}>{resumo}</p>
-                <p className={estilo['article-date']}>{data} • {leitura} min de leitura</p>
+                <p className={estilo['article-date']}>{leitura} min de leitura</p>
+                <p className={estilo['article-date']}>Criado em: {criado}</p>
+                <p className={estilo['article-date']}>Publicado em: {publicado}</p>
+                <p className={estilo['article-date']}>Atualizado em: {atualizado}</p>
                 <div className={estilo['article-metrics']}>
                     <span>{views} views</span>
                     <span>{shares} shares</span>

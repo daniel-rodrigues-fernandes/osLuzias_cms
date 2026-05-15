@@ -1,6 +1,12 @@
 import { redirect } from "react-router-dom";
 
 export async function artigosLoader() {
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+        throw redirect("/login");
+    }
+
     try {
         const token = localStorage.getItem("token");
         const response = await fetch("http://localhost:8080/posts/me/posts", {
@@ -10,16 +16,16 @@ export async function artigosLoader() {
             }
         });
 
-    
+
         if (response.status === 401) {
             localStorage.removeItem("token");
             throw redirect("/login");
         }
-        
+
         const artigos = await response.json();
 
         console.log("Resposta do servidor:", artigos);
-        
+
         if (!response.ok) {
             throw new Error(artigos.message || "Erro ao carregar artigos");
         }

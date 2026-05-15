@@ -46,9 +46,22 @@ exports.findPublished = async () => {
 
 exports.findByAutor = async (autorId) => {
     const [rows] = await db.query(`
-        SELECT p.*, a.nome AS autor
+        SELECT 
+            p.idPost,
+            p.titulo,
+            p.slug,
+            p.resumo,
+            p.tempoLeitura,
+            p.status,
+            p.publicado_em,
+            p.criado_em,
+            p.atualizado_em,
+            p.arquivado_em,
+            a.nome AS autor,
+            c.nome AS categoriaNome
         FROM posts p
         LEFT JOIN autores a ON a.idAutor = p.autorId
+        LEFT JOIN categorias c ON c.Idcategoria = p.categoriaId
         WHERE p.autorId = ?
         ORDER BY p.criado_em DESC
     `, [autorId]);
@@ -108,7 +121,7 @@ exports.updatePost = async (id, data) => {
 
     console.log("Updating post with data:", data);
     console.log("Generated SQL fields:", fields.join(', '));
-    
+
     values.push(id);
     console.log("Generated SQL values:", values);
 
