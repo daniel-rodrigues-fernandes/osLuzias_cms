@@ -2,7 +2,13 @@ import estilo from './HomePage.module.css';
 import MetricCard from "../../components/MetricCard/MetricCard";
 import TableRow from '../../components/TableRow/TableRow';
 
+import { useLoaderData } from 'react-router-dom';
+
 export default function HomePage() {
+
+  const metricasArtigos = useLoaderData()
+  console.log(metricasArtigos)
+
   return (
     <main className={estilo['main']}>
       <header className={estilo['header']}>
@@ -20,8 +26,8 @@ export default function HomePage() {
       </header>
 
       <section className={estilo['metrics']}>
-        <MetricCard title="Artigos Publicados" value="123" />
-        <MetricCard title="Artigos em Rascunho" value="456" />
+        <MetricCard title="Artigos Publicados" value={metricasArtigos[0].total_publicados} />
+        <MetricCard title="Artigos em Rascunho" value={metricasArtigos[0].total_rascunhos} />
         <MetricCard title="Tempo de Leitura Médio" value="789" />
       </section>
 
@@ -38,9 +44,15 @@ export default function HomePage() {
               </tr>
             </thead>
             <tbody>
-              <TableRow titulo="Como cuidar de plantas suculentas" categoria="Jardinagem" date="2024-06-01" status="Publicado" />
-              <TableRow titulo="10 dicas para uma alimentação saudável" categoria="Saúde" date="2024-05-28" status="Publicado" />
-              <TableRow titulo="Guia completo de viagens para a Europa" categoria="Viagens" date="2024-05-20" status="Rascunho" />
+              {metricasArtigos.slice(1).map(artigo => (
+                <TableRow
+                  key={artigo.idPost}
+                  titulo={artigo.titulo}
+                  date={artigo.publicado_em ? new Date(artigo.publicado_em).toLocaleDateString('pt-BR') : "Não publicado"}
+                  status={(artigo.status).charAt(0).toUpperCase() + artigo.status.slice(1)}
+                  categoria={artigo.categoriaNome ? artigo.categoriaNome : "-"}
+                />
+              ))}
             </tbody>
           </table>
         </div>

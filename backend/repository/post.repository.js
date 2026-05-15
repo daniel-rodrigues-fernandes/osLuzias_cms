@@ -138,3 +138,30 @@ exports.archivePost = async (id) => {
         WHERE idPost = ?
     `, [id]);
 };
+
+exports.findMetricsByAutor = async (id) => {
+    const [rows] = await db.query(`
+        SELECT 
+            p.idPost,
+            p.titulo,
+            c.nome as categoriaNome,
+            p.publicado_em,
+            p.status
+        FROM posts p
+        LEFT JOIN categorias c ON p.categoriaId = c.idCategoria
+        WHERE p.autorId = ?
+        ORDER BY p.criado_em DESC
+        LIMIT 5
+    `, [id]);
+
+    const metricas = await db.query(`
+        SELECT
+            COUNT(CASE WHEN status = 'publicado' THEN 1 END) AS total_publicados,
+            COUNT(CASE WHEN status = 'rascunho' THEN 1 END) AS total_rascunhos
+        FROM posts
+    `);
+
+    rows.unshift(metricas[0][0])
+    return rows;
+    
+}

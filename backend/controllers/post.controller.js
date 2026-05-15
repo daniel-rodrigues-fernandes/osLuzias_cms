@@ -75,3 +75,13 @@ exports.archivePost = async (req, res) => {
 
     res.json({ message: "Post arquivado" });
 };
+
+exports.getMyMetrics = async(req, res) => {
+    try {
+        const autorId = req.user.id; // vindo do middleware JWT
+        const posts = await postService.getMetricasDoAutor(autorId);
+        res.json(posts);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}

@@ -10,6 +10,7 @@ import { artigosLoader } from './loader/artigos.loader'
 import { editArticleLoader } from './loader/editArticle.loader'
 import { newArticleLoader } from './loader/newArticle.loader'
 import { protectedLoader } from './loader/protectedLoader.loader'
+import { homePageLoader } from './loader/homePage.loader'
 import ErrorPage from './Pages/ErrorPage/ErrorPage'
 
 
@@ -30,7 +31,7 @@ const router = createBrowserRouter([
     errorElement: <h1>Error - 404</h1>,
     loader: protectedLoader,
     children: [
-      { index: true, element: <HomePage /> },
+      { index: true, element: <HomePage />, loader: homePageLoader },
       { path: "novo-artigo", element: <NewArticle />, loader: newArticleLoader },
       { path: "artigos", element: <Articles />, loader: artigosLoader },
       { path: "artigos/:id/editar", element: <NewArticle />, loader: editArticleLoader },

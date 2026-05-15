@@ -46,7 +46,7 @@ exports.updatePost = async (id, data, userId) => {
 
     console.log("Updating post ID:", id, "with data:", data);
     const { titulo, conteudo, resumo, categoria, status } = data;
-    
+
     if (!titulo || !conteudo) {
         throw new Error("Título e conteúdo são obrigatórios");
     }
@@ -59,7 +59,7 @@ exports.updatePost = async (id, data, userId) => {
     const conteudo_html = parseMarkdown(conteudo);
     const tempoLeitura = calcularTempoLeitura(conteudo_html);
 
-    return await postRepository.updatePost(id, {titulo, slug, conteudo, categoria, conteudo_html, resumo, tempoLeitura, status});
+    return await postRepository.updatePost(id, { titulo, slug, conteudo, categoria, conteudo_html, resumo, tempoLeitura, status });
 };
 
 exports.getAllPostsPublished = async () => {
@@ -95,3 +95,11 @@ exports.getById = async (id) => {
 exports.archivePost = async (id) => {
     await postRepository.archivePost(id);
 };
+
+exports.getMetricasDoAutor = async (autorId) => {
+    if (!autorId) {
+        throw new Error("Autor não autenticado");
+    }
+
+    return await postRepository.findMetricsByAutor(autorId);
+}
