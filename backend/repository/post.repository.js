@@ -58,10 +58,13 @@ exports.findByAutor = async (autorId) => {
             p.atualizado_em,
             p.arquivado_em,
             a.nome AS autor,
-            c.nome AS categoriaNome
+            c.nome AS categoriaNome,
+            pm.visualizacoes,
+            pm.compartilhamentos
         FROM posts p
         LEFT JOIN autores a ON a.idAutor = p.autorId
         LEFT JOIN categorias c ON c.Idcategoria = p.categoriaId
+        LEFT JOIN post_metricas pm ON pm.postId = p.idPost
         WHERE p.autorId = ?
         ORDER BY p.criado_em DESC
     `, [autorId]);

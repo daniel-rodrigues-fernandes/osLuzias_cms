@@ -5,6 +5,7 @@ import ArticleCard from '../../components/ArticleCard/ArticleCard';
 export default function Articles() {
 
   const artigos= useLoaderData()
+  console.log("Artigos", artigos)
   const aviso = <p className={estilo['mensagem']}>Nenhum artigo encontrado.</p>
 
   const navigation = useNavigation()
@@ -38,8 +39,8 @@ export default function Articles() {
               criado={new Date(artigo.criado_em).toLocaleDateString('pt-BR')}
               atualizado={new Date(artigo.atualizado_em).toLocaleDateString('pt-BR')}
               leitura={artigo.tempoLeitura}
-              views={artigo.views}
-              shares={artigo.shares}
+              views={artigo.visualizacoes ? artigo.visualizacoes: 0}
+              shares={artigo.compartilhamentos ? artigo.compartilhamentos : 0}
               onDeleteSuccess={revalidator.revalidate}
             />
         )) : aviso)}
