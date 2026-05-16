@@ -65,6 +65,9 @@ export default function ArticleCard({ categoria, status, titulo, resumo, publica
 
     return (
         <div className={estilo['article-card']}>
+            <div className={estilo['article-img']}>
+                <img src="https://picsum.photos/500/300?1" />
+            </div>
             <div className={estilo['article-info']}>
                 <div className={estilo['article-category-status']}>
                     <p>{categoria}</p>
@@ -72,7 +75,7 @@ export default function ArticleCard({ categoria, status, titulo, resumo, publica
                 </div>
                 <h2 className={estilo['article-title']}>{titulo}</h2>
                 <p className={estilo['article-summary']}>{resumo}</p>
-                <p className={estilo['article-date']}>{leitura} min de leitura</p>
+                <p className={estilo['article-readingTime']}>{leitura} min de leitura</p>
                 <p className={estilo['article-date']}>Criado em: {criado}</p>
                 <p className={estilo['article-date']}>Publicado em: {publicado}</p>
                 <p className={estilo['article-date']}>Atualizado em: {atualizado}</p>
